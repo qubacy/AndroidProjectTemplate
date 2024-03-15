@@ -1,23 +1,73 @@
 package com.qubacy.utility.androidprojecttemplate.ui.application.activity._common.screen._common.fragment._common.component.list.adapter
 
+import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.UiThread
 import androidx.recyclerview.widget.RecyclerView
+import com.qubacy.utility.androidprojecttemplate.ui.application.activity._common.screen._common.fragment._common.component.list.adapter.producer.BaseItemViewProducer
+import com.qubacy.utility.androidprojecttemplate.ui.application.activity._common.screen._common.fragment._common.component.list.item.RecyclerViewItemView
+import com.qubacy.utility.androidprojecttemplate.ui.application.activity._common.screen._common.fragment._common.component.list.item.data.RecyclerViewItemData
 
 /**
  * Note: In order to successfully compose Unit tests, it's recommended to use WRAPPED version
  * of notify..() methods.
  */
-abstract class BaseRecyclerViewAdapter<ItemType, ViewHolderType: RecyclerView.ViewHolder>(
+abstract class BaseRecyclerViewAdapter<
+    RecyclerViewItemDataType : RecyclerViewItemData,
+    RecyclerViewItemViewType,
+    RecyclerViewItemViewProducerType: BaseItemViewProducer<
+        RecyclerViewItemDataType, RecyclerViewItemViewType
+    >,
+    ViewHolderType: BaseRecyclerViewAdapter.ViewHolder<
+        RecyclerViewItemDataType, RecyclerViewItemViewType
+    >
+>(
+    val itemViewProducer: RecyclerViewItemViewProducerType
+) : RecyclerView.Adapter<ViewHolderType>()
+    where RecyclerViewItemViewType : RecyclerViewItemView<RecyclerViewItemDataType>,
+          RecyclerViewItemViewType : View
+{
+    class ViewHolder<
+        RecyclerViewItemDataType : RecyclerViewItemData,
+        RecyclerViewItemViewType
+    >(
+        val baseItemView: RecyclerViewItemViewType
+    ) : RecyclerView.ViewHolder(baseItemView)
+        where RecyclerViewItemViewType : RecyclerViewItemView<RecyclerViewItemDataType>,
+              RecyclerViewItemViewType : View
+    {
+        fun setData(data: RecyclerViewItemDataType) {
+            baseItemView.setData(data)
+        }
+    }
 
-) : RecyclerView.Adapter<ViewHolderType>() {
-    protected val mItems: MutableList<ItemType> = mutableListOf()
-    val items: List<ItemType> get() = mItems
+    companion object {
+        const val TAG = "BaseRecyclerViewAdapter"
+    }
+
+
+    protected val mItems: MutableList<RecyclerViewItemDataType> = mutableListOf()
+    val items: List<RecyclerViewItemDataType> get() = mItems
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderType {
+        val itemView = itemViewProducer.createItemView(parent, viewType)
+
+        return createViewHolder(itemView)
+    }
+
+    abstract fun createViewHolder(itemView: RecyclerViewItemViewType): ViewHolderType
+
+    override fun onBindViewHolder(holder: ViewHolderType, position: Int) {
+        val itemData = mItems[position]
+
+        holder.baseItemView.setData(itemData)
+    }
 
     override fun getItemCount(): Int {
         return mItems.size
     }
 
-    protected fun replaceItems(items: List<ItemType>) {
+    protected fun replaceItems(items: List<RecyclerViewItemDataType>) {
         mItems.apply {
             clear()
             addAll(items)
