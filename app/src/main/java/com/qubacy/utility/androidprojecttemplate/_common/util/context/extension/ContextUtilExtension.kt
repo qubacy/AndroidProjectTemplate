@@ -1,4 +1,4 @@
-package com.qubacy.utility.androidprojecttemplate._common.util.context
+package com.qubacy.utility.androidprojecttemplate._common.util.context.extension
 
 import android.content.Context
 import android.graphics.drawable.Drawable

@@ -1,4 +1,4 @@
-package com.qubacy.utility.androidprojecttemplate.ui.application.activity._common.screen._common.fragment._common.util.extensional
+package com.qubacy.utility.androidprojecttemplate.ui.application.activity._common.screen._common.fragment._common.util.extension
 
 import android.content.Context
 import android.view.inputmethod.InputMethodManager

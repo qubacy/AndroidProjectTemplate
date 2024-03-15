@@ -1,4 +1,4 @@
-package com.qubacy.utility.androidprojecttemplate._common.util.bundle
+package com.qubacy.utility.androidprojecttemplate._common.util.bundle.extension
 
 import android.os.Build
 import android.os.Bundle
