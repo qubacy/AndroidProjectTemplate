@@ -3,7 +3,7 @@ package com.qubacy.utility.androidprojecttemplate.ui.application.activity._commo
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.qubacy.utility.androidprojecttemplate._common.error.type._common.ErrorType
+import com.qubacy.utility.androidprojecttemplate._common.error.type.ErrorType
 import com.qubacy.utility.androidprojecttemplate.data.error.repository.ErrorDataRepository
 import com.qubacy.utility.androidprojecttemplate.ui.application.activity._common.screen._common.fragment.stateful.model.operation._common.UiOperation
 import com.qubacy.utility.androidprojecttemplate.ui.application.activity._common.screen._common.fragment.stateful.model.operation.error.ErrorUiOperation
